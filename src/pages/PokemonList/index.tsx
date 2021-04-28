@@ -56,7 +56,7 @@ function PokemonList() {
     }, [])
 
     useEffect(() => {
-        console.log(selectedType)
+        
         if (selectedType)
             fetchPokemonByType(selectedType)
         else
@@ -112,12 +112,12 @@ function PokemonList() {
 
             const list = data.pokemon as { slot: number, pokemon: PokemonPointer }[]
 
-            const total = list.length
-            let loaded = 0
+            // const total = list.length
+            // let loaded = 0
 
             const newPokemons = await Promise.all(list.map(async pokemon => {
                 const { data } = await axios.get<Pokemon>(pokemon.pokemon.url)
-                loaded++
+                // loaded++
                 // setProgress(loaded / total)
                 return data
             }))

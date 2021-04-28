@@ -23,7 +23,7 @@ interface Pokemon {
 	forms: Form[]
 
 	height: number
-	held_items: any[]
+	weight: number
 
 	sprites: {
 		back_default: string
@@ -38,7 +38,63 @@ interface Pokemon {
 
 	types: { type: Type, slot: number }[]
 
-	weight: number
+	order: number
+
+	game_indices: {
+		game_index: number,
+		version: {
+			name: string,
+			url: string
+		}
+	}[]
+
+	held_items: {
+		item: {
+			name: string,
+			url: string
+		},
+		version_details: {
+			rarity: number
+			version: {
+				name: string
+				url: string
+			}
+		}[]
+	}[]
+
+	location_area_encounters: string
+
+	moves: {
+		move: {
+			name: string
+			url: string
+		},
+		version_group_details: {
+			level_earned_at: number
+			version_group: {
+				name: string
+				url: string
+			},
+			move_learn_method: {
+				name: string
+				url: string
+			}
+		}[]
+	}[]
+	
+	species: {
+		name: string
+		url: string
+	}
+
+	stats: {
+		base_stat: number
+		effort: number
+		stat: {
+			name: string
+			url: string
+		}
+	}[]
 }
 
 export type { Pokemon }
