@@ -5,6 +5,7 @@ import { Pokemon } from '../../interfaces/Pokemon'
 import { PokemonCard } from '../../components/PokemonCard'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { usePokedex } from '../../contexts/PokedexContext'
+import StringUtils from '../../utils/StringUtils'
 
 interface PokemonPointer {
     name: string
@@ -122,7 +123,7 @@ function PokemonList() {
 
             // setProgress(undefined)
 
-            setSelectedType(type)
+            // setSelectedType(type)
 
             setPokemonList(newPokemons)
 
@@ -149,7 +150,7 @@ function PokemonList() {
                         style={[styles.typeButton, { backgroundColor: 'whitesmoke' }]}
                         onPress={resetTypeFilter}
                     >
-                        <Text>All types</Text>
+                        <Text style={{ fontWeight: !selectedType ? 'bold' : 'normal' }}>All types</Text>
                     </TouchableOpacity>
                     {types.map(type =>
                         <TouchableOpacity
@@ -158,7 +159,9 @@ function PokemonList() {
                             // onPress={() => fetchPokemonByType(type)}
                             onPress={() => setSelectedType(type)}
                         >
-                            <Text>{type.name}</Text>
+                            <Text style={{ fontWeight: selectedType?.name === type.name ? 'bold' : 'normal' }} >
+                                {StringUtils.capitalize(type.name)}
+                            </Text>
                         </TouchableOpacity>
                     )}
                 </ScrollView>

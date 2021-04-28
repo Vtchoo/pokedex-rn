@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native'
 import { PokedexProvider } from './src/contexts/PokedexContext';
+import { Routes } from './src/navigation';
 
 import { PokemonList } from './src/pages/PokemonList'
 
@@ -20,7 +21,7 @@ const App = () => {
 
 	return (
 		<PokedexProvider>
-			<PokemonList />
+			<Routes />
 		</PokedexProvider>
 	);
 };
