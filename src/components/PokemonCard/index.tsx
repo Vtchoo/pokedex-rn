@@ -7,6 +7,8 @@ import { usePokedex } from '../../contexts/PokedexContext'
 
 interface PokemonCardProps {
     pokemon: Pokemon
+    onPress?: () => void
+    onLongPress?: () => void
     style?: StyleProp<ViewStyle>
 }
 
@@ -29,7 +31,9 @@ function PokemonCard({ pokemon, ...props }: PokemonCardProps) {
         <TouchableOpacity
             activeOpacity={.9}
             style={[styles.card, props.style, { backgroundColor: colors[type.name] || 'whitesmoke' }]}
-            onPress={addOrRemovePokemon}
+            // onPress={addOrRemovePokemon}
+            onPress={props.onPress}
+            onLongPress={props.onLongPress}
         >
             <View style={styles.spriteContainer}>
                 <Image source={{ uri: getPokemonImage(pokemon.id) }} style={styles.image}/>

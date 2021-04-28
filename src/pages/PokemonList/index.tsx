@@ -6,6 +6,7 @@ import { PokemonCard } from '../../components/PokemonCard'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { usePokedex } from '../../contexts/PokedexContext'
 import StringUtils from '../../utils/StringUtils'
+import { useNavigation } from '@react-navigation/core'
 
 interface PokemonPointer {
     name: string
@@ -25,7 +26,7 @@ interface PokemonApiTypeResponse {
 
 function PokemonList() {
 
-    
+    const navigation = useNavigation()
     const { colors } = usePokedex()
     
     // Fetch data
@@ -140,6 +141,11 @@ function PokemonList() {
         setSelectedType(undefined)
     }
 
+    function handlePokemonCardPress(pokemon: Pokemon) {
+
+        navigation.navigate('PokemonInfo', { id: pokemon.id })
+    }
+
     return (
         <View style={styles.container}>
             <View>
@@ -169,7 +175,13 @@ function PokemonList() {
             
             <FlatList
                 data={pokemonList}
-                renderItem={({ item }) => <PokemonCard pokemon={item} style={{ width: '47.5%', marginBottom: '5%' }} />}
+                renderItem={({ item }) =>
+                    <PokemonCard
+                        pokemon={item}
+                        onPress={() => handlePokemonCardPress(item)}
+                        style={{ width: '47.5%', marginBottom: '5%' }}
+                    />
+                }
                 keyExtractor={(pokemon, i) => `${i} ${pokemon.id.toString()}`}
                 numColumns={2}
                 contentContainerStyle={{ padding: 20 }}
