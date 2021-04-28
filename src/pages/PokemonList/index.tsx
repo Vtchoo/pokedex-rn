@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FlatList, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
+import { FlatList, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, Text, TouchableOpacity, View, ScrollView, ActivityIndicator } from 'react-native'
 import axios from 'axios'
 import { Pokemon } from '../../interfaces/Pokemon'
 import { PokemonCard } from '../../components/PokemonCard'
@@ -31,6 +31,7 @@ function PokemonList() {
     const limit = 10
     const INITIAL_FETCH_URL = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=0`
     const [loading, setLoading] = useState(false)
+    // const [progress, setProgress] = useState<number>()
     const [nextPokemon, setNextPokemon] = useState(INITIAL_FETCH_URL)
     
     const [types, setTypes] = useState<{ name: string, url: string }[]>([])
@@ -109,27 +110,21 @@ function PokemonList() {
 
             const list = data.pokemon as { slot: number, pokemon: PokemonPointer }[]
 
+            const total = list.length
+            let loaded = 0
+
             const newPokemons = await Promise.all(list.map(async pokemon => {
                 const { data } = await axios.get<Pokemon>(pokemon.pokemon.url)
-                console.log(data)
+                loaded++
+                // setProgress(loaded / total)
                 return data
             }))
+
+            // setProgress(undefined)
 
             setSelectedType(type)
 
             setPokemonList(newPokemons)
-            // console.log(JSON.stringify(data, null, '\t'))
-            // setNextPokemon(data.next)
-
-            // const list = data.results
-            // console.log(list)
-    
-            // const newPokemons = await Promise.all(list.map(async pokemon => {
-            //     const { data } = await axios.get<Pokemon>(pokemon.url)
-            //     return data
-            // }))
-
-            // setPokemonList(newPokemons)
 
         } catch (error) {
             console.log(error)
@@ -180,7 +175,19 @@ function PokemonList() {
                 onEndReached={fetchPokemon}
                 ref={listRef}
                 onScroll={handleScroll}
+                onEndReachedThreshold={.1}
             />
+            
+            {loading &&
+                <ActivityIndicator size='large' color='blue' style={{ position: 'absolute', bottom: 0, marginBottom: 30, alignSelf: 'center' }}/>
+            }
+
+            {/* {progress &&
+                <View style={{ height: 5, borderRadius: 10 }}>
+                    <View style={{ width: `${Math.floor((progress || 0) * 100)}%`, backgroundColor: 'green', height: '100%' }}/>
+                </View>
+            } */}
+
             {!isOnTop &&
                 <TouchableOpacity
                     onPress={() => listRef.current?.scrollToOffset({ animated: true, offset: 0 })}
@@ -189,6 +196,7 @@ function PokemonList() {
                     <Icon name='chevron-up' size={30} />
                 </TouchableOpacity>
             }
+
         </View>
     )
 }
