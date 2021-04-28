@@ -26,7 +26,6 @@ function PokemonList() {
     const listRef = useRef<FlatList>(null)
     const [isOnTop, setIsOnTop] = useState(true)
     function handleScroll({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) {
-        
         if (nativeEvent.contentOffset.y === 0) return setIsOnTop(true)
         if (isOnTop && nativeEvent.contentOffset.y !== 0) return setIsOnTop(false)
     }

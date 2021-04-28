@@ -11,15 +11,18 @@ import {
   useColorScheme,
   View,
 } from 'react-native'
+import { PokedexProvider } from './src/contexts/PokedexContext';
 
 import { PokemonList } from './src/pages/PokemonList'
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  return (
-    <PokemonList />
-  );
+	return (
+		<PokedexProvider>
+			<PokemonList />
+		</PokedexProvider>
+	);
 };
 
 
