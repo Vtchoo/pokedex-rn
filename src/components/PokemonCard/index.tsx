@@ -14,7 +14,7 @@ function PokemonCard({ pokemon, ...props }: PokemonCardProps) {
 
     const { type } = pokemon.types[0]
 
-    const { addPokemon, removePokemon, myPokemons } = usePokedex()
+    const { addPokemon, removePokemon, myPokemons, colors } = usePokedex()
 
     const getPokemonImage = (id: number) => `https://pokeres.bastionbot.org/images/pokemon/${id}.png?width=30&height=30`
 
@@ -84,22 +84,5 @@ const styles = StyleSheet.create({
         fontSize: 12,
     }
 })
-
-const colors: { [color: string]: string } = {
-	fire: '#FDDFDF',
-	grass: '#DEFDE0',
-	electric: '#FCF7DE',
-	water: '#DEF3FD',
-	ground: '#f4e7da',
-	rock: '#d5d5d4',
-	fairy: '#fceaff',
-	poison: '#98d7a5',
-	bug: '#f8d5a3',
-	dragon: '#97b3e6',
-	psychic: '#eaeda1',
-	flying: '#F5F5F5',
-	fighting: '#E6E0D4',
-	normal: '#F5F5F5'
-}
 
 export { PokemonCard }
